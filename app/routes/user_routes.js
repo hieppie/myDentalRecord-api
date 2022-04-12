@@ -1,20 +1,24 @@
 const express = require('express')
 // jsonwebtoken docs: https://github.com/auth0/node-jsonwebtoken
+// generate random string
 const crypto = require('crypto')
 // Passport docs: http://www.passportjs.org/docs/
+// check/authenticate tokens
 const passport = require('passport')
 // bcrypt docs: https://github.com/kelektiv/node.bcrypt.js
+// encrypting/checking passwords
 const bcrypt = require('bcrypt')
 
 // see above for explanation of "salting", 10 rounds is recommended
 const bcryptSaltRounds = 10
 
 // pull in error types and the logic to handle them and set status codes
+// require error handling 'middelwares'
 const errors = require('../../lib/custom_errors')
-
 const BadParamsError = errors.BadParamsError
 const BadCredentialsError = errors.BadCredentialsError
 
+// require user model
 const User = require('../models/user')
 
 // passing this as a second argument to `router.<verb>` will make it
@@ -28,44 +32,67 @@ const router = express.Router()
 // SIGN UP
 // POST /sign-up
 router.post('/sign-up', (req, res, next) => {
+  // get data from request.
+  /* data will be in format:
+  {
+    credential: {
+      email:' hiep@duong.com
+      password: 'hiep'
+      password_confirmation: 'duong'
+    }
+  }
+  */
+  const credentials = req.body.credentials
   // start a promise chain, so that any errors will pass to `handle`
-  Promise.resolve(req.body.credentials)
-    // reject any requests where `credentials.password` is not present, or where
-    // the password is an empty string
-    .then(credentials => {
-      if (!credentials ||
-          !credentials.password ||
-          credentials.password !== credentials.password_confirmation) {
+  Promise.resolve()
+  // reject any requests where `credentials.password` is not present, or where
+  // the password is an empty string.
+  // or password does not match password confirmation
+    .then(() => {
+      if (
+        !credentials ||
+				!credentials.password ||
+				credentials.password !== credentials.password_confirmation
+      ) {
         throw new BadParamsError()
       }
     })
-    // generate a hash from the provided password, returning a promise
-    .then(() => bcrypt.hash(req.body.credentials.password, bcryptSaltRounds))
+  // generate a hash from the provided password, returning a promise
+    .then(() => bcrypt.hash(credentials.password, bcryptSaltRounds))
     .then(hash => {
       // return necessary params to create a user
-      return {
-        email: req.body.credentials.email,
+      const user = {
+        email: credentials.email,
         hashedPassword: hash
       }
+      // create user with provided email and hashed password
+      return User.create(user)
     })
-    // create user with provided email and hashed password
-    .then(user => User.create(user))
-    // send the new user object back with status 201, but `hashedPassword`
-    // won't be send because of the `transform` in the User model
-    .then(user => res.status(201).json({ user: user.toObject() }))
-    // pass any errors along to the error handler
+
+  // send the new user object back with status 201, but `hashedPassword`
+  // won't be send because of the `transform` in the User model
+    .then((user) => res.status(201).json({ user: user.toObject() }))
+  // pass any errors along to the error handler
     .catch(next)
 })
 
 // SIGN IN
 // POST /sign-in
 router.post('/sign-in', (req, res, next) => {
+  /* data will be in format:
+  {
+    credential: {
+      email:' hiep@duong.com
+      password: 'hiep'
+    }
+  }
+  */
   const pw = req.body.credentials.password
+  // declare a user variable to store the found user so we can access it at each save of the Promise chain without returning it each time
   let user
-
-  // find a user based on the email that was passed
+  // find a user based on the email that was passed. every email is unique
   User.findOne({ email: req.body.credentials.email })
-    .then(record => {
+    .then((record) => {
       // if we didn't find a user with that email, send 401
       if (!record) {
         throw new BadCredentialsError()
@@ -76,11 +103,12 @@ router.post('/sign-in', (req, res, next) => {
       // is exactly equal to the hashed password stored in the DB
       return bcrypt.compare(pw, user.hashedPassword)
     })
-    .then(correctPassword => {
+    .then((correctPassword) => {
       // if the passwords matched
       if (correctPassword) {
         // the token will be a 16 byte random hex string
         const token = crypto.randomBytes(16).toString('hex')
+        // attach the token to the user object
         user.token = token
         // save the token to the DB as a property on user
         return user.save()
@@ -90,8 +118,9 @@ router.post('/sign-in', (req, res, next) => {
         throw new BadCredentialsError()
       }
     })
-    .then(user => {
+    .then((user) => {
       // return status 201, the email, and the new token
+      // again filtering out the hashedPassword
       res.status(201).json({ user: user.toObject() })
     })
     .catch(next)
@@ -129,13 +158,13 @@ router.patch('/change-password', requireToken, (req, res, next) => {
     .catch(next)
 })
 
-router.delete('/sign-out', requireToken, (req, res, next) => {
-  // create a new random token for the user, invalidating the current one
-  req.user.token = null
-  // save the token and respond with 204
-  req.user.save()
-    .then(() => res.sendStatus(204))
-    .catch(next)
-})
+// router.delete('/sign-out', requireToken, (req, res, next) => {
+//   // create a new random token for the user, invalidating the current one
+//   req.user.token = null
+//   // save the token and respond with 204
+//   req.user.save()
+//     .then(() => res.sendStatus(204))
+//     .catch(next)
+// })
 
 module.exports = router
