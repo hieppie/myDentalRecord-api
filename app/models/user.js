@@ -4,12 +4,16 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    // can only sign up with a unique email once
     unique: true
   },
+  // password will be transformed with hash transformation
+  // example: 'hiep' => 'ijfg' => 'jkgr'
   hashedPassword: {
     type: String,
     required: true
   },
+  // gives this token to user once signed in. will generate this later
   token: String
 }, {
   timestamps: true,
