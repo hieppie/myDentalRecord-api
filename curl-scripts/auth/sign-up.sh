@@ -1,5 +1,8 @@
 #!/bin/bash
 
+
+# sh curl-scripts/auth/sign-out.sh 
+
 EMAIL="store@store.com"
 PASSWORD="store"
 

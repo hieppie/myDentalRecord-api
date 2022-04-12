@@ -127,44 +127,53 @@ router.post('/sign-in', (req, res, next) => {
 })
 
 // CHANGE password
-// PATCH /change-password
+// PATCH /change-password= router.METHOD(PATH, MIDDLEWARE, CALLBACK)
+// The MIDDLEWARE will only run when the server receives a request to this endpoint specifically
+// requireToken is a callback function
 router.patch('/change-password', requireToken, (req, res, next) => {
+  // requireToken will run passport.authenticate
+  // passport will store the authenticated user on req.user
+  // declare a user variable to store the found user so we can access it at each save of the Promise chain without returning it each time
   let user
   // `req.user` will be determined by decoding the token payload
   User.findById(req.user.id)
-    // save user outside the promise chain
-    .then(record => { user = record })
-    // check that the old password is correct
+  // save user outside the promise chain
+    .then((record) => {
+      user = record
+    })
+  // check that the old password is correct. compare if the old pw matches the hashedPw
     .then(() => bcrypt.compare(req.body.passwords.old, user.hashedPassword))
-    // `correctPassword` will be true if hashing the old password ends up the
-    // same as `user.hashedPassword`
-    .then(correctPassword => {
+  // `correctPassword` will be true if hashing the old password ends up the
+  // same as `user.hashedPassword`
+    .then((correctPassword) => {
       // throw an error if the new password is missing, an empty string,
       // or the old password was wrong
       if (!req.body.passwords.new || !correctPassword) {
         throw new BadParamsError()
       }
     })
-    // hash the new password
+  // hash the new password
     .then(() => bcrypt.hash(req.body.passwords.new, bcryptSaltRounds))
-    .then(hash => {
+    .then((hash) => {
       // set and save the new hashed password in the DB
       user.hashedPassword = hash
       return user.save()
     })
-    // respond with no content and status 200
+  // respond with no content and status 200
     .then(() => res.sendStatus(204))
-    // pass any errors along to the error handler
+  // pass any errors along to the error handler
     .catch(next)
 })
 
-// router.delete('/sign-out', requireToken, (req, res, next) => {
-//   // create a new random token for the user, invalidating the current one
-//   req.user.token = null
-//   // save the token and respond with 204
-//   req.user.save()
-//     .then(() => res.sendStatus(204))
-//     .catch(next)
-// })
+
+// authenticate the user with requireToken
+router.delete('/sign-out', requireToken, (req, res, next) => {
+  // create a new random token for the user, invalidating the current one
+  req.user.token = null
+  // save the token and respond with 204
+  req.user.save()
+    .then(() => res.sendStatus(204))
+    .catch(next)
+})
 
 module.exports = router

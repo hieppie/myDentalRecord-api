@@ -1,7 +1,9 @@
 #!/bin/bash
+# sh curl-scripts/auth/sign-in.sh 
+
 
 EMAIL="store@store.com"
-PASSWORD="store"
+PASSWORD="stored"
 
 
 API="http://localhost:4741"
