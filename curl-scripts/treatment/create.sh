@@ -1,10 +1,12 @@
 #!/bin/bash
 
-TOKEN="713d9b620d00fbf3a588d38330cc5215"
-NAME="RCT"
+# sh curl-scripts/treatment/create.sh 
+
+TOKEN="ce5f94b8d04eb349f7afbbce1d90380c"
+NAME="fill"
 TOOTH="14"
-RADIOGRAPH="panoramic"
-DATE="feb 01, 2022"
+RADIOGRAPH="Pas"
+DATE="April 11, 2020"
 
 API="http://localhost:4741"
 URL_PATH="/treatments"

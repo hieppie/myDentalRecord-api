@@ -2,7 +2,7 @@
 # sh curl-scripts/auth/sign-in.sh 
 
 
-EMAIL="store@store.com"
+EMAIL="stored@stored.com"
 PASSWORD="stored"
 
 

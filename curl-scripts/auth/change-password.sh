@@ -2,7 +2,7 @@
 
 # sh curl-scripts/auth/change-password.sh 
 
-TOKEN="125e1d130842b2ca4dc38ee7501e62fe"
+TOKEN="fa19388a9920d090a5727ca369a89f21"
 OLDPW="store"
 NEWPW='stored'
 

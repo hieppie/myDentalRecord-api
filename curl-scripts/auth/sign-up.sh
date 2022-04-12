@@ -1,10 +1,10 @@
 #!/bin/bash
 
 
-# sh curl-scripts/auth/sign-out.sh 
+# sh curl-scripts/auth/sign-up.sh 
 
-EMAIL="store@store.com"
-PASSWORD="store"
+EMAIL="stored@stored.com"
+PASSWORD="stored"
 
 API="http://localhost:4741"
 URL_PATH="/sign-up"
