@@ -30,47 +30,53 @@ const router = express.Router()
 // INDEX
 // GET /treatments
 router.get('/treatments', requireToken, (req, res, next) => {
-  Treatment.find()
-    .then(examples => {
-      // `examples` will be an array of Mongoose documents
+  Treatment.find({ owner: req.user.id })
+    .then(treatments => {
+      // `treatments` will be an array of Mongoose documents
       // we want to convert each one to a POJO, so we use `.map` to
       // apply `.toObject` to each one
-      return examples.map(example => example.toObject())
+      return treatments.map(treatment => treatment.toObject())
     })
-    // respond with status 200 and JSON of the examples
-    .then(examples => res.status(200).json({ examples: examples }))
+    // respond with status 200 and JSON of the treatments
+    .then(treatments => res.status(200).json({ treatments: treatments }))
     // if an error occurs, pass it to the handler
     .catch(next)
 })
 
-// // SHOW
-// // GET /examples/5a7db6c74d55bc51bdf39793
-// router.get('/treatments/:id', requireToken, (req, res, next) => {
-//   // req.params.id will be set based on the `:id` in the route
-//   Treatment.findById(req.params.id)
-//     .then(handle404)
-//     // if `findById` is succesful, respond with 200 and "example" JSON
-//     .then(example => res.status(200).json({ example: example.toObject() }))
-//     // if an error occurs, pass it to the handler
-//     .catch(next)
-// })
+// SHOW
+// GET /treatments/5a7db6c74d55bc51bdf39793
+router.get('/treatments/:id', requireToken, (req, res, next) => {
+  // get id of treatment from params
+  const id = req.params.id
+  // req.params.id will be set based on the `:id` in the route
+  Treatment.findById(id)
+    .then(handle404)
+    // if `findById` is successful, respond with 200 and "example" JSON
+    .then(treatment => res.status(200).json({ treatment: treatment.toObject() }))
+    // if an error occurs, pass it to the handler
+    .catch(next)
+})
 
-// // CREATE
-// // POST /examples
-// router.post('/treatments', requireToken, (req, res, next) => {
-//   // set owner of new example to be current user
-//   req.body.example.owner = req.user.id
+// CREATE
+// POST /treatments
+router.post('/treatments', requireToken, (req, res, next) => {
+  // set owner of new treatment to be current user
+  // get treatment data from the request
+  const treatment = req.body.treatment
+  // attach the owner using 'req.user.id
+  treatment.owner = req.user.id
+  // req.body.treatment.owner = req.user.id
 
-//   Treatment.create(req.body.example)
-//     // respond to succesful `create` with status 201 and JSON of new "example"
-//     .then(example => {
-//       res.status(201).json({ example: example.toObject() })
-//     })
-//     // if an error occurs, pass it off to our error handler
-//     // the error handler needs the error message and the `res` object so that it
-//     // can send an error message back to the client
-//     .catch(next)
-// })
+  Treatment.create(treatment)
+    // respond to successful `create` with status 201 and JSON of new "example"
+    .then(treatment => {
+      res.status(201).json({ treatment: treatment.toObject() })
+    })
+    // if an error occurs, pass it off to our error handler
+    // the error handler needs the error message and the `res` object so that it
+    // can send an error message back to the client
+    .catch(next)
+})
 
 // // UPDATE
 // // PATCH /examples/5a7db6c74d55bc51bdf39793

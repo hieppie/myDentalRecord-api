@@ -7,15 +7,15 @@ const treatmentSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  toothNumber: {
-    type: Number,
+  tooth: {
+    type: String,
     required: true
   },
   radiograph: {
     type: String,
     required: true
   },
-  dateOfService: {
+  date: {
     type: String,
     required: true
   },
