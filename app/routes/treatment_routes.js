@@ -72,9 +72,16 @@ router.get('/treatments/:id', requireToken, (req, res, next) => {
   // req.params.id will be set based on the `:id` in the route
   Treatment.findById(id)
     .then(handle404)
-    // if `findById` is successful, respond with 200 and "example" JSON
-    .then(treatment => res.status(200).json({ treatment: treatment.toObject() }))
-    // if an error occurs, pass it to the handler
+  // if `findById` is successful, respond with 200 and "example" JSON
+    .then((treatment) =>
+    // pass the `req` object and the Mongoose record to `requireOwnership`
+    // it will throw an error if the current user isn't the owner
+      requireOwnership(req, treatment)
+    )
+    .then((treatment) =>
+      res.status(200).json({ treatment: treatment.toObject() })
+    )
+  // if an error occurs, pass it to the handler
     .catch(next)
 })
 

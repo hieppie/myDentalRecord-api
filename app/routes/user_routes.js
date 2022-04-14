@@ -49,11 +49,7 @@ router.post('/sign-up', (req, res, next) => {
   // the password is an empty string.
   // or password does not match password confirmation
     .then(() => {
-      if (
-        !credentials ||
-				!credentials.password ||
-				credentials.password !== credentials.password_confirmation
-      ) {
+      if (!credentials || !credentials.password || credentials.password !== credentials.password_confirmation) {
         throw new BadParamsError()
       }
     })
@@ -142,18 +138,18 @@ router.patch('/change-password', requireToken, (req, res, next) => {
       user = record
     })
   // check that the old password is correct. compare if the old pw matches the hashedPw
-    .then(() => bcrypt.compare(req.body.passwords.old, user.hashedPassword))
+    .then(() => bcrypt.compare(req.body.password.old, user.hashedPassword))
   // `correctPassword` will be true if hashing the old password ends up the
   // same as `user.hashedPassword`
     .then((correctPassword) => {
       // throw an error if the new password is missing, an empty string,
       // or the old password was wrong
-      if (!req.body.passwords.new || !correctPassword) {
+      if (!req.body.password.new || !correctPassword) {
         throw new BadParamsError()
       }
     })
   // hash the new password
-    .then(() => bcrypt.hash(req.body.passwords.new, bcryptSaltRounds))
+    .then(() => bcrypt.hash(req.body.password.new, bcryptSaltRounds))
     .then((hash) => {
       // set and save the new hashed password in the DB
       user.hashedPassword = hash
@@ -164,7 +160,6 @@ router.patch('/change-password', requireToken, (req, res, next) => {
   // pass any errors along to the error handler
     .catch(next)
 })
-
 
 // authenticate the user with requireToken
 router.delete('/sign-out', requireToken, (req, res, next) => {
