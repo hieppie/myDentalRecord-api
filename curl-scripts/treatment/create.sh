@@ -2,10 +2,10 @@
 
 # sh curl-scripts/treatment/create.sh 
 
-TOKEN="ce5f94b8d04eb349f7afbbce1d90380c"
+TOKEN="884bc0deab7fd803d3c8324002fb4d90"
 NAME="fill"
-TOOTH="14"
-RADIOGRAPH="Pas"
+TOOTH="18"
+RADIOGRAPHS="Pas"
 DATE="April 11, 2020"
 
 API="http://localhost:4741"
@@ -20,7 +20,7 @@ curl "${API}${URL_PATH}" \
     "treatment": {
       "name": "'"${NAME}"'",
       "tooth": "'"${TOOTH}"'",
-       "radiograph": "'"${RADIOGRAPH}"'",
+       "radiographs": "'"${RADIOGRAPHS}"'",
       "date": "'"${DATE}"'"
     }
   }'

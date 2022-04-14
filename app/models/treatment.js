@@ -11,7 +11,7 @@ const treatmentSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  radiograph: {
+  radiographs: {
     type: String,
     required: true
   },
