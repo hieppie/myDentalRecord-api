@@ -1,7 +1,7 @@
 
 # My Dental Record: Logging and referencing your personal dental records
 
-As a former registered dental hygienist, I know how important it is to have a record of all of your past dental treatment. This free application will help users, or in this case patients, create an account and log of of their dental treatment for future references. At times a users might find this useful when they want to:
+As a former registered dental hygienist, I know how important it is to have a record of all of your past dental treatment. This free application will help users, or in this case patients, create an account and log of of their dental treatment for future references. This application will help users as references when they want to:
 
 - Dispute a treatment or payment of a treatment with their dental provider.
 - Settle a treatment or the payment of the treatment with their insurance.
@@ -20,7 +20,7 @@ As a former registered dental hygienist, I know how important it is to have a re
 - As a new user I want to be able to sign up for a free account and be notified if the sign up is a success or failure.
 - As a returning user I want to be able to sign in and be notified if the sign in is a success or failure.
 - As a user I want to be able Create or log a new treatment and save it into my record.
-- As a user I want to be able to Read or view my and only my record of all of my treatments. No other   user should be able to see my record and I should not be able to see theirs. 
+- As a user I want to be able to Read or view my and only my record of all of my treatments. No other   user should be able to see my records and I should not be able to see theirs due to HIPPA 
 - As a user I want to be able to Read or show a treatment with the the treatment ID provided. 
 - As a user I want to be able to Update or edit a treatment information. 
 - As a user I want to be able to Delete a treatment. 
@@ -42,7 +42,7 @@ As a former registered dental hygienist, I know how important it is to have a re
 
 ## Wireframe:
 
-![Wire](./app/images/ERD.jpg)
+![Wire](./app/images/Wireframe.jpg)
 
 
 ## Reference Links
