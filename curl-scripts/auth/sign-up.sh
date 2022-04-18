@@ -3,11 +3,11 @@
 
 # sh curl-scripts/auth/sign-up.sh 
 
-EMAIL="stored@stored.com"
-PASSWORD="stored"
+# EMAIL="they@they.com"
+# PASSWORD="they"
 
-API="http://localhost:4741"
-URL_PATH="/sign-up"
+# API="http://localhost:4741"
+# URL_PATH="/sign-up"
 
 curl "${API}${URL_PATH}" \
   --include \

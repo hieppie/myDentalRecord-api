@@ -2,15 +2,15 @@
 
 # sh curl-scripts/treatment/update.sh 
 
-TOKEN="713d9b620d00fbf3a588d38330cc5215"
-ID="6255c6fbc58b892200a41908"
-NAME="implant"
-TOOTH="31"
-RADIOGRAPHS="panoramic & PAs"
-DATE="March 01, 2022"
+# TOKEN="713d9b620d00fbf3a588d38330cc5215"
+# ID="6255c6fbc58b892200a41908"
+# NAME="implant"
+# TOOTH="31"
+# RADIOGRAPHS="panoramic & PAs"
+# DATE="March 01, 2022"
 
-API="http://localhost:4741"
-URL_PATH="/treatments"
+# API="http://localhost:4741"
+# URL_PATH="/treatments"
 
 curl "${API}${URL_PATH}/${ID}" \
   --include \

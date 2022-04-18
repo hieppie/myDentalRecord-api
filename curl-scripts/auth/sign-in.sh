@@ -2,12 +2,12 @@
 # sh curl-scripts/auth/sign-in.sh 
 
 
-EMAIL="stored@stored.com"
-PASSWORD="stored"
+# EMAIL="stored@stored.com"
+# PASSWORD="stored"
 
 
-API="http://localhost:4741"
-URL_PATH="/sign-in"
+# API="http://localhost:4741"
+# URL_PATH="/sign-in"
 
 curl "${API}${URL_PATH}" \
   --include \
