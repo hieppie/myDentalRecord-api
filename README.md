@@ -20,7 +20,7 @@ As a former registered dental hygienist, I know how important it is to have a re
 - As a new user I want to be able to sign up for a free account and be notified if the sign up is a success or failure.
 - As a returning user I want to be able to sign in and be notified if the sign in is a success or failure.
 - As a user I want to be able Create or log a new treatment and save it into my record.
-- As a user I want to be able to Read or view my and only my record of all of my treatments. No other   user should be able to see my records and I should not be able to see theirs due to HIPPA violations. 
+- As a user I want to be able to Read or view my and only my record of all of my treatments. No other   user should be able to see my records and I should not be able to see theirs due to HIPAA violations. 
 - As a user I want to be able to Read or show a treatment with the the treatment ID provided. 
 - As a user I want to be able to Update or edit a treatment information. 
 - As a user I want to be able to Delete a treatment. 
