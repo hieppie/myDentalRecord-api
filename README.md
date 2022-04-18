@@ -1,7 +1,7 @@
 
 # My Dental Record: Logging and referencing your personal dental records
 
-As a former registered dental hygienist, I know how important it is to have a record of all of your past dental treatment. This free application will help users, or in this case, patients, to create an account and log of of their dental treatment for future references. At times a users might find this useful when they want to:
+As a former registered dental hygienist, I know how important it is to have a record of all of your past dental treatment. This free application will help users, or in this case patients, create an account and log of of their dental treatment for future references. At times a users might find this useful when they want to:
 
 - Dispute a treatment or payment of a treatment with their dental provider.
 - Settle a treatment or the payment of the treatment with their insurance.
